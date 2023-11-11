@@ -23,7 +23,13 @@ public class AccountController {
 			@RequestParam(name = "email", defaultValue = "") String email,
 			@RequestParam(name = "password", defaultValue = "") String password,
 			Model model) {
-		// 入力値チェック
+		
+		// リクエストパラメータをスコープに登録
+		model.addAttribute("name", name);
+		model.addAttribute("email", email);
+		model.addAttribute("password", password);
+		
+		// 入力値チェック：入力値をリクエストに登録後にチェックを実施（エラー時に自画面遷移の必要があるため）
 		List<String> errorList = new ArrayList<String>();
 		// 名前の必須入力チェック
 		if (name == null || name.isEmpty()) {
@@ -54,10 +60,6 @@ public class AccountController {
 			return "accountForm";
 		}
 		
-		// リクエストパラメータをスコープに登録
-		model.addAttribute("name", name);
-		model.addAttribute("email", email);
-		model.addAttribute("password", password);
 		// 画面遷移
 		return "accountConfirm";
 	}
